@@ -10,6 +10,7 @@ var settings = {
 }
 // comment added for git help
 $.ajax(settings).done(function (response) {
+    console.log(response)
     mySong = response.data[0]
     $songBoxContent = $(`<h2>${mySong.title}</h2>
                         <h4>By ${mySong.artist.name}</h4>
@@ -17,24 +18,71 @@ $.ajax(settings).done(function (response) {
     $songBoxContent.appendTo($(".song-box"))
 });
 
+// deleted irrelevant api call
 
-var songName = "bad";
-var artistName = "michael jackson";
-var settings = {
-    "async": true,
-    "crossDomain": true,
-    //"url": `https://api.chartlyrics.com/apiv1.asmx/SearchLyric?artist=${artistName}&song=${songName}`,
-    "url": `https://sridurgayadav-chart-lyrics-v1.p.rapidapi.com/apiv1.asmx/SearchLyricDirect?artist=${artistName}&song=${songName}`,
-    "method": "GET",
-    "headers": {
-        "x-rapidapi-host": "sridurgayadav-chart-lyrics-v1.p.rapidapi.com",
-        "x-rapidapi-key": "9975c1386cmshca62308f2c47475p14a7abjsn022a4fb62050"
-    }
-}
+// new code for billboard
+$(function () {
 
-$.ajax(settings).done(function (response) {
-    console.log(response);
-    console.log("got here")
-    $(".lyrics").append(response.getElementsByTagName("Lyric")[0].innerHTML);
+    $.ajax({
+        type: "GET",
+        data: {
+            apikey: "309788821d050a0623303261b9ddedc4",
+            q_track: "darkness",
+            q_artist: "eminem",
+            format: "jsonp",
+            callback: "jsonp_callback"
+        },
+        url: "http://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
+        dataType: "jsonp",
+        jsonpCallback: 'jsonp_callback',
+        contentType: 'application/json',
+        success: function (data) {
+            // myLyrics = data.message.body.lyrics.lyrics_body
+            // var lyrics = $(`<p>${myLyrics}</p>`)
+            // lyrics.appendTo($(".song-box"))
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        }
+    });
+});
+
+// mo.js code
+const OPTS = {
+    fill: 'none',
+    radius: 25,
+    strokeWidth: { 50: 0 },
+    scale: { 0: 1 },
+    angle: { 'rand(-35, -70)': 0 },
+    duration: 500,
+    left: 0, top: 0,
+    easing: 'cubic.out'
+};
+
+const circle1 = new mojs.Shape({
+    ...OPTS,
+    stroke: 'cyan',
+});
+
+const circle2 = new mojs.Shape({
+    ...OPTS,
+    radius: { 0: 15 },
+    strokeWidth: { 30: 0 },
+    stroke: 'magenta',
+    delay: 'rand(75, 150)'
+});
+
+document.addEventListener('click', function (e) {
+
+    circle1
+        .tune({ x: e.pageX, y: e.pageY })
+        .replay();
+
+    circle2
+        .tune({ x: e.pageX, y: e.pageY })
+        .replay();
 
 });
+
