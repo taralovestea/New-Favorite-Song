@@ -25,6 +25,8 @@
     <div class="hero-body">
       <div class="container">
         <div>
+          <h1 class="title">Lyrics Generator</h1>
+          <h2 class="subtitle">Some clever text here, maybe punny.</h2>
         </div>
       </div>
     </div>
@@ -51,22 +53,15 @@
   <div class="tile is-ancestor">
     <div class="tile is-parent">
       <article class="tile is-child box song-box">
-        <!-- add id or class to pull song title  AND  add to p tag below -->
-        <p class="title">Side column</p>
-        <!-- add id or class to pull song artist  AND  add to p tag below -->
-        <p class="subtitle">With some content</p>
-        <!-- additional detail ; release date etc? -->
-        <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor
-            vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-        </div>
+        <p id ="song-name" class="title">Side column</p>
+        <p id="artist-name" class="subtitle">With some content</p>
       </article>
     </div>
     <div class="tile is-parent is-8">
       <article class="tile is-child box">
-        <p class="title">Lyrics</p>
+        <p id="lyrics" class="title">Lyrics</p>
         <!-- add id or class to pull song lyrics  AND  add to p tag below -->
-        <p class="subtitle">With some content</p>
+        <p id="api" class="subtitle">Provided by <a>Link</a>.</p>
         <!-- add id or class to pull song lyrics  AND  add to p tag below -->
 
         <div class="content">
@@ -99,7 +94,8 @@
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
 
-
+<script src="https://cdn.jsdelivr.net/mojs/0.265.6/mo.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/mojs-player/0.43.15/mojs-player.min.js"></script>
   <script src="script.js"></script>
 
 </body>
