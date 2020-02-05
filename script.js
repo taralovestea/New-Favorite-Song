@@ -37,9 +37,10 @@ $(function () {
         jsonpCallback: 'jsonp_callback',
         contentType: 'application/json',
         success: function (data) {
-            // myLyrics = data.message.body.lyrics.lyrics_body
-            // var lyrics = $(`<p>${myLyrics}</p>`)
-            // lyrics.appendTo($(".song-box"))
+            myLyrics = data.message.body.lyrics.lyrics_body
+            var lyrics = $(`<p>${myLyrics}</p>`)
+            lyrics.appendTo($(".content1"))
+            $(".content1 p")[1].innerHTML = ($($(".content1 p")[1]).text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "<br>"))
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
