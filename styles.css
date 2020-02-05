@@ -1,3 +1,16 @@
 img {
   border-radius: 2%;
 }
+
+.tile.is-parent {
+  margin: 10px;
+}
+
+body, html {
+  padding: 0;
+}
+
+body {
+  background: rgba(241, 226, 215, 0.2);
+  // background: #333;
+}
