@@ -21,6 +21,7 @@
 </head>
 
 <body>
+  <!-- form section -->
   <section class="hero is-primary">
     <div class="hero-body">
       <div class="container">
@@ -34,30 +35,27 @@
   <section class="section">
     <div class="container is-fluid">
       <div class="notification">
-        This container is <strong>centered</strong> on desktop.
         <div class="field">
           <br>
-          <label class="label">Label</label>
-          <div class="control">
+          <label class="label">Search an artist to get a random popular song of theirs</label>
+          <form id="user-artist-form">
             <input class="input" type="text" placeholder="Type an artist here">
-          </div>
-          <p class="help">This is a help text</p>
-          <div class="control">
-            <button class="button is-primary">Submit</button>
-          </div>
+            <button type="submit" class="button is-primary">Submit</button>
+          </form>
         </div>
       </div>
     </div>
   </section>
+  <!-- end of form section -->
 
-  <div id="hidden" class="tile is-ancestor" style="display:none">
+  <div class="tile is-ancestor hidden" style="display:none">
     <div class="tile is-parent">
       <article class="tile is-child box song-box">
-        <p id ="song-name" class="title">Side column</p>
+        <p id="song-name" class="title">Side column</p>
         <p id="artist-name" class="subtitle">With some content</p>
       </article>
     </div>
-    <div id="hidden" class="tile is-parent is-8" style="display:none">
+    <div class="tile is-parent is-8 hidden" style="display:none">
       <article class="tile is-child box">
         <p id="lyrics" class="title">Lyrics</p>
         <p id="api" class="subtitle">Provided by <a>Link</a>.</p>
@@ -90,8 +88,8 @@
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
 
-<script src="https://cdn.jsdelivr.net/mojs/0.265.6/mo.min.js" ></script>
-<script src="https://cdn.jsdelivr.net/mojs-player/0.43.15/mojs-player.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/mojs/0.265.6/mo.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/mojs-player/0.43.15/mojs-player.min.js"></script>
   <script src="script.js"></script>
 
 </body>
