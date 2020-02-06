@@ -99,3 +99,12 @@ const OPTS = {
     
   });
   
+  function showHide() {
+    let div = document.getElementById(hideen);
+    if (div.style.display == 'none') {
+        div.style.display = '';
+    }
+    else {
+        div.style.display = 'none';
+    }
+}
