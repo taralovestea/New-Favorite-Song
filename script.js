@@ -32,8 +32,8 @@ $("#user-artist-form").submit(function (event) {
     $.ajax(settings).then(function (response) {
         console.log(response.data)
         let divHidden = $(".hidden");
-        if (response.data !== null && response.data.length !== 0 && response.data !== undefined) {
-            
+        if (response.data !== null && response.data !== undefined && response.data.length !== 0) {
+            $("#error").empty();
             [...divHidden].forEach(hiddenElement => {
                 if (hiddenElement.style.display == 'none') {
                     hiddenElement.style.display = '';
@@ -45,10 +45,12 @@ $("#user-artist-form").submit(function (event) {
             mySong = response.data[Math.floor(Math.random() * response.data.length)]
             userSong = "";
             userSong += mySong.title;
-            $(".title").text(mySong.title)
-            $(".subtitle").text(mySong.artist.name)
-            $songBoxContent = $(`<img src=${mySong.album.cover_medium}>`)
+            $(".song-box").empty()
+            $songBoxContent = $(`<p id="song-name" class="title">${mySong.title}</p>
+                                <p id="artist-name" class="subtitle">${mySong.artist.name}</p>
+                                <img src=${mySong.album.cover_medium}>`)
             $songBoxContent.appendTo($(".song-box"))
+
             // second API request with dependency on first API call 
             $(function () {
                 $.ajax({
@@ -67,10 +69,11 @@ $("#user-artist-form").submit(function (event) {
                     success: function (data) {
                         console.log(data)
                         myLyrics = data.message.body.lyrics.lyrics_body
-                        var lyrics = $(`<p>${myLyrics}</p>`)
-                        lyrics.appendTo($(".content1"))
+                        myLyrics = myLyrics.replace(/[.\/#!?$%\^&\*;:{}=\-_`~]/g,"<br>")
+                        // $(".content1 p").empty()
+                        $(".content1 p").html(myLyrics)
                         // regex for replacing all periods with <br>'s
-                        $(".content1 p")[1].innerHTML = ($($(".content1 p")[1]).text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "<br>"))
+                        //$(".content1 p").innerHTML = ($($(".content1 p")).text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"<br>"))
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR);
@@ -80,19 +83,16 @@ $("#user-artist-form").submit(function (event) {
                 });
             });
         }
-
         else{
-            $("#user-artist-form").append(userArtist + "is not an available artist.");
+            $("#error").empty()
+            $("#error").append(userArtist + "is not an available artist.");
             [...divHidden].forEach(hiddenElement => {
                 hiddenElement.style.display = 'none';
             })
-
         }
-
     }).catch(function(error) {
             console.log(error + "this is an error")
-          
-          })
+    })
 
 })
 
