@@ -15,7 +15,7 @@ $("#user-artist-form").submit(function (event) {
     userArtist = $($(this).children()[0]).val()
     event.preventDefault();
 
-    
+
 
 
     var settings = {
@@ -48,7 +48,17 @@ $("#user-artist-form").submit(function (event) {
             $(".song-box").empty()
             $songBoxContent = $(`<p id="song-name" class="title">${mySong.title}</p>
                                 <p id="artist-name" class="subtitle">${mySong.artist.name}</p>
-                                <img src=${mySong.album.cover_medium}>`)
+                                <img src=${mySong.album.cover_medium}>
+                                <br>
+                                <br>
+                                <audio controls>
+                                    <source src="${mySong.preview}" type="audio/mpeg">
+                                    Your browser does not support the audio element.
+                                </audio>
+                                <form action="${mySong.link}" target="_blank">
+                                    <input class="button is-primary" type="submit" value="Keep Listening" />
+                                </form>
+`)
             $songBoxContent.appendTo($(".song-box"))
 
             // second API request with dependency on first API call 
@@ -69,7 +79,7 @@ $("#user-artist-form").submit(function (event) {
                     success: function (data) {
                         console.log(data)
                         myLyrics = data.message.body.lyrics.lyrics_body
-                        myLyrics = myLyrics.replace(/[.\/#!?$%\^&\*;:{}=\-_`~]/g,"<br>")
+                        myLyrics = myLyrics.replace(/[.\/#!?$%\^&\*;:{}=\-_`~]/g, "<br>")
                         // $(".content1 p").empty()
                         $(".content1 p").html(myLyrics)
                         // regex for replacing all periods with <br>'s
@@ -83,15 +93,15 @@ $("#user-artist-form").submit(function (event) {
                 });
             });
         }
-        else{
+        else {
             $("#error").empty()
             $("#error").append(userArtist + "is not an available artist.");
             [...divHidden].forEach(hiddenElement => {
                 hiddenElement.style.display = 'none';
             })
         }
-    }).catch(function(error) {
-            console.log(error + "this is an error")
+    }).catch(function (error) {
+        console.log(error + "this is an error")
     })
 
 })
