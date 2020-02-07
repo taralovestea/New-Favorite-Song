@@ -35,13 +35,13 @@ $("#user-artist-form").submit(function (event) {
     }
     // .done for first API request 
     $.ajax(settings).done(function (response) {
-        console.log(response.data)
         mySong = response.data[Math.floor(Math.random() * response.data.length)]
         userSong = "";
         userSong += mySong.title;
-        $(".title").text(mySong.title)
-        $(".subtitle").text(mySong.artist.name)
-        $songBoxContent = $(`<img src=${mySong.album.cover_medium}>`)
+        $(".song-box").empty()
+        $songBoxContent = $(`<p id="song-name" class="title">${mySong.title}</p>
+                            <p id="artist-name" class="subtitle">${mySong.artist.name}</p>
+                            <img src=${mySong.album.cover_medium}>`)
         $songBoxContent.appendTo($(".song-box"))
         // second API request with dependency on first API call 
         $(function () {
@@ -61,10 +61,11 @@ $("#user-artist-form").submit(function (event) {
                 success: function (data) {
                     console.log(data)
                     myLyrics = data.message.body.lyrics.lyrics_body
-                    var lyrics = $(`<p>${myLyrics}</p>`)
-                    lyrics.appendTo($(".content1"))
+                    myLyrics = myLyrics.replace(/[.\/#!?$%\^&\*;:{}=\-_`~]/g,"<br>")
+                    // $(".content1 p").empty()
+                    $(".content1 p").html(myLyrics)
                     // regex for replacing all periods with <br>'s
-                    $(".content1 p")[1].innerHTML = ($($(".content1 p")[1]).text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "<br>"))
+                    //$(".content1 p").innerHTML = ($($(".content1 p")).text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"<br>"))
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);
