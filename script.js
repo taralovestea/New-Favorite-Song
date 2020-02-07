@@ -12,17 +12,12 @@ function showHide() {
 }
 // settings for the first API call for deezer
 $("#user-artist-form").submit(function (event) {
-    event.preventDefault();
-    let divHidden = $(".hidden");
-    [...divHidden].forEach(hiddenElement => {
-        if (hiddenElement.style.display == 'none') {
-            hiddenElement.style.display = '';
-        }
-        else {
-            hiddenElement.style.display = 'none';
-        }
-    });
     userArtist = $($(this).children()[0]).val()
+    event.preventDefault();
+
+    
+
+
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -34,46 +29,71 @@ $("#user-artist-form").submit(function (event) {
         }
     }
     // .done for first API request 
-    $.ajax(settings).done(function (response) {
+    $.ajax(settings).then(function (response) {
         console.log(response.data)
-        mySong = response.data[Math.floor(Math.random() * response.data.length)]
-        userSong = "";
-        userSong += mySong.title;
-        $(".title").text(mySong.title)
-        $(".subtitle").text(mySong.artist.name)
-        $songBoxContent = $(`<img src=${mySong.album.cover_medium}>`)
-        $songBoxContent.appendTo($(".song-box"))
-        // second API request with dependency on first API call 
-        $(function () {
-            $.ajax({
-                type: "GET",
-                data: {
-                    apikey: "309788821d050a0623303261b9ddedc4",
-                    q_track: userSong,
-                    q_artist: userArtist,
-                    format: "jsonp",
-                    callback: "jsonp_callback"
-                },
-                url: "http://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
-                dataType: "jsonp",
-                jsonpCallback: 'jsonp_callback',
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log(data)
-                    myLyrics = data.message.body.lyrics.lyrics_body
-                    var lyrics = $(`<p>${myLyrics}</p>`)
-                    lyrics.appendTo($(".content1"))
-                    // regex for replacing all periods with <br>'s
-                    $(".content1 p")[1].innerHTML = ($($(".content1 p")[1]).text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "<br>"))
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log(jqXHR);
-                    console.log(textStatus);
-                    console.log(errorThrown);
+        let divHidden = $(".hidden");
+        if (response.data !== null && response.data.length !== 0 && response.data !== undefined) {
+            
+            [...divHidden].forEach(hiddenElement => {
+                if (hiddenElement.style.display == 'none') {
+                    hiddenElement.style.display = '';
                 }
+                else {
+                    hiddenElement.style.display = 'none';
+                }
+            })
+            mySong = response.data[Math.floor(Math.random() * response.data.length)]
+            userSong = "";
+            userSong += mySong.title;
+            $(".title").text(mySong.title)
+            $(".subtitle").text(mySong.artist.name)
+            $songBoxContent = $(`<img src=${mySong.album.cover_medium}>`)
+            $songBoxContent.appendTo($(".song-box"))
+            // second API request with dependency on first API call 
+            $(function () {
+                $.ajax({
+                    type: "GET",
+                    data: {
+                        apikey: "309788821d050a0623303261b9ddedc4",
+                        q_track: userSong,
+                        q_artist: userArtist,
+                        format: "jsonp",
+                        callback: "jsonp_callback"
+                    },
+                    url: "http://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
+                    dataType: "jsonp",
+                    jsonpCallback: 'jsonp_callback',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        console.log(data)
+                        myLyrics = data.message.body.lyrics.lyrics_body
+                        var lyrics = $(`<p>${myLyrics}</p>`)
+                        lyrics.appendTo($(".content1"))
+                        // regex for replacing all periods with <br>'s
+                        $(".content1 p")[1].innerHTML = ($($(".content1 p")[1]).text().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "<br>"))
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                    }
+                });
             });
-        });
-    });
+        }
+
+        else{
+            $("#user-artist-form").append(userArtist + "is not an available artist.");
+            [...divHidden].forEach(hiddenElement => {
+                hiddenElement.style.display = 'none';
+            })
+
+        }
+
+    }).catch(function(error) {
+            console.log(error + "this is an error")
+          
+          })
+
 })
 
 
@@ -99,18 +119,19 @@ const OPTS = {
 const circle1 = new mojs.Shape({
     ...OPTS,
     stroke: 'cyan',
+    delay: 'rand(249, 250)'
+
 });
 
 const circle2 = new mojs.Shape({
     ...OPTS,
-    radius: { 0: 15 },
+    radius: { 20: 15 },
     strokeWidth: { 30: 0 },
     stroke: 'magenta',
-    delay: 'rand(75, 150)'
+    delay: 'rand(249, 250)'
 });
 
-document.addEventListener('click', function (e) {
-
+document.addEventListener('mouseup', function (e) {
     circle1
         .tune({ x: e.pageX, y: e.pageY })
         .replay();
