@@ -12,11 +12,8 @@ function showHide() {
 }
 // settings for the first API call for deezer
 $("#user-artist-form").submit(function (event) {
-    userArtist = $($(this).children()[0]).val()
     event.preventDefault();
-
-
-
+    userArtist = $($(this).children()[0]).val()
 
     var settings = {
         "async": true,
@@ -30,16 +27,12 @@ $("#user-artist-form").submit(function (event) {
     }
     // .done for first API request 
     $.ajax(settings).then(function (response) {
-        console.log(response.data)
         let divHidden = $(".hidden");
         if (response.data !== null && response.data !== undefined && response.data.length !== 0) {
             $("#error").empty();
             [...divHidden].forEach(hiddenElement => {
                 if (hiddenElement.style.display == 'none') {
                     hiddenElement.style.display = '';
-                }
-                else {
-                    hiddenElement.style.display = 'none';
                 }
             })
             mySong = response.data[Math.floor(Math.random() * response.data.length)]
@@ -77,7 +70,6 @@ $("#user-artist-form").submit(function (event) {
                     jsonpCallback: 'jsonp_callback',
                     contentType: 'application/json',
                     success: function (data) {
-                        console.log(data)
                         myLyrics = data.message.body.lyrics.lyrics_body
                         myLyrics = myLyrics.replace(/[.\/#!?$%\^&\*;:{}=\-_`~]/g, "<br>")
                         // $(".content1 p").empty()
