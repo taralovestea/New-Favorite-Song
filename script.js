@@ -65,7 +65,7 @@ $("#user-artist-form").submit(function (event) {
                         format: "jsonp",
                         callback: "jsonp_callback"
                     },
-                    url: "http://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
+                    url: "https://api.musixmatch.com/ws/1.1/matcher.lyrics.get",
                     dataType: "jsonp",
                     jsonpCallback: 'jsonp_callback',
                     contentType: 'application/json',
