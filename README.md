@@ -34,3 +34,5 @@ PATENT PENDING BKT 2020
 
 
 [See the deployed application by clicking here.](https://taralovestea.github.io/New-Favorite-Song/)
+
+[Created by Tara Hughes ](https://taralovestea.github.io/taralovestea)
